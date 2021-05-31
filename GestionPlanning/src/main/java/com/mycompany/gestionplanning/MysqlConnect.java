@@ -8,7 +8,7 @@ public class MysqlConnect {
     Connection con = null;
     public static Connection ConnectDB(){
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("org.postgresql.Driver");
             Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/Gest-appli", "postgres", "root");
             JOptionPane.showMessageDialog(null, "Connected to Database");
             return conn;
