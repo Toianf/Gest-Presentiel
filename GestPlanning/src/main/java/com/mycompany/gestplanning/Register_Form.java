@@ -1,6 +1,7 @@
 
 package com.mycompany.gestplanning;
 
+import com.mycompany.model.Utilisateur;
 import java.awt.Color;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -372,38 +373,31 @@ ResultSet  rs = null;
     }//GEN-LAST:event_jButton_RegisterMouseExited
 
     private void jButton_RegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_RegisterActionPerformed
-
-         String fname = jTextField_Fullname1.getText();
-         String fprenom = jTextField_Fullname.getText();
-         String username = jTextField_Username.getText();
-         String pass1 = String.valueOf(jPasswordField_1.getPassword());
-         String pass2 = String.valueOf(jPasswordField_2.getPassword());
-         String gender = "Homme";
+         Utilisateur u = new Utilisateur();
+         u.setNom(jTextField_Fullname1.getText());
+         u.setPrenom(jTextField_Fullname.getText());
+         u.setLogin(jTextField_Username.getText());
+         u.setPassword(String.valueOf(jPasswordField_1.getPassword()));
+         u.setGenre("Homme");
          
          if(jRadioButton_Female.isSelected()){
-             gender = "Femme";
+             u.setGenre("Femme");
          }
         
          if(verifyFields())
          {
-             if(!checkUsername(username))
+             if(!checkUsername(u.getNom()))
              {
 
-                 String registerUserQuery = "INSERT INTO utilisateur(id, nom, prenom, genre, login, password) VALUES (?,?,?,?,?,?)";
+                 String registerUserQuery = "INSERT INTO utilisateur(nom, prenom, genre, login, password) VALUES (?,?,?,?,?)";
                 
                  try {
-                Statement st=conn.createStatement();
-                ResultSet result=st.executeQuery("select count(*) from utilisateur");
-                result.next();
-                int idMax=result.getInt(1);
-
                      pst =conn.prepareStatement(registerUserQuery);
-                     pst.setInt(1, ++idMax);
-                     pst.setString(2, fname);
-                     pst.setString(3, fprenom);
-                     pst.setString(4, gender);
-                     pst.setString(5, username);
-                     pst.setString(6, pass1);
+                     pst.setString(1, u.getNom());
+                     pst.setString(2, u.getPrenom());
+                     pst.setString(3, u.getGenre());
+                     pst.setString(4, u.getLogin());
+                     pst.setString(5, u.getPassword());
                                
                          if(pst.executeUpdate() != 0){
                             JOptionPane.showMessageDialog(null, "Your Account Has Been Created");
@@ -497,22 +491,23 @@ ResultSet  rs = null;
 // create a function to verify the empty fields  
     public boolean verifyFields()
     {
-        String fname = jTextField_Fullname1.getText();
-        String fprenom = jTextField_Fullname.getText();
-        String uname = jTextField_Username.getText();
-        String pass1 = String.valueOf(jPasswordField_1.getPassword());
-        String pass2 = String.valueOf(jPasswordField_2.getPassword());
+         Utilisateur u = new Utilisateur();
+         u.setNom(jTextField_Fullname1.getText());
+         u.setPrenom(jTextField_Fullname.getText());
+         u.setLogin(jTextField_Username.getText());
+         u.setPassword(String.valueOf(jPasswordField_1.getPassword()));
+         String pass2 = String.valueOf(jPasswordField_2.getPassword());
         
         // check empty fields
-        if(fname.trim().equals("") || uname.trim().equals("") || fprenom.trim().equals("")
-           || pass1.trim().equals("") || pass2.trim().equals(""))
+        if(u.getNom().trim().equals("") || u.getPrenom().trim().equals("")
+           || u.getLogin().trim().equals("") || u.getPassword().trim().equals("") || pass2.trim().equals(""))
         {
             JOptionPane.showMessageDialog(null, "One Or More Fields Are Empty","Empty Fields",2);
             return false;
         }
         
         // check if the two password are equals
-        else if(!pass1.equals(pass2))
+        else if(!u.getPassword().equals(pass2))
         {
            JOptionPane.showMessageDialog(null, "Password Doesn't Match","Confirm Password",2); 
            return false;

@@ -1,27 +1,24 @@
 package com.mycompany.model;
 
 
-public class Utilisateur {
+public class Salarie {
     
     private Integer id;   
     private String nom;
     private String prenom;
     private String genre;
-    private String login;
-    private String password;
-    
-    public Utilisateur() {
+    private String profession;
+       
+    public Salarie() {
     }
-
-    public Utilisateur(Integer id, String nom, String prenom, String genre, String login, String password) {
+    public Salarie(Integer id, String nom, String prenom, String genre, String profession) {
         this.id = id;
         this.nom = nom;
         this.prenom = prenom;
         this.genre = genre;
-        this.login = login;
-        this.password = password;
+        this.profession = profession;
     }
-
+    
     public Integer getId() {
         return id;
     }
@@ -54,25 +51,20 @@ public class Utilisateur {
         this.genre = genre;
     }
 
-    public String getLogin() {
-        return login;
+    public String getProfession() {
+        return profession;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setProfession(String profession) {
+        this.profession = profession;
     }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
+   
     @Override
     public String toString() {
-        return "nom :" + nom + ", prenom :" + prenom + ", genre :" +genre + ", login :" +login;
+        return "nom : " + nom + ", prenom : " + prenom + ", genre : " + genre + ", profession : " + profession;
     }
+
+    
+   
     
 }

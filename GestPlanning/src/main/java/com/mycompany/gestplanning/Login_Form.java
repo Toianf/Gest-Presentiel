@@ -1,6 +1,7 @@
 
 package com.mycompany.gestplanning;
 
+import com.mycompany.model.Utilisateur;
 import java.awt.Color;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -369,9 +370,10 @@ ResultSet  rs = null;
         // clear the password field on focus if the text is "password"
         
         // get the password text
-        String pass = String.valueOf(jPasswordField.getPassword());
+        Utilisateur u = new Utilisateur();
+        u.setPassword(String.valueOf(jPasswordField.getPassword()));
         
-        if(pass.trim().toLowerCase().equals("password"))
+        if(u.getPassword().trim().toLowerCase().equals("password"))
         {
             jPasswordField.setText("");
             jPasswordField.setForeground(Color.black);
@@ -388,10 +390,11 @@ ResultSet  rs = null;
         // on focus lost event
         
         // get the password text
-        String pass = String.valueOf(jPasswordField.getPassword());
+        Utilisateur u = new Utilisateur();
+        u.setPassword(String.valueOf(jPasswordField.getPassword()));
         
-        if(pass.trim().equals("") || 
-           pass.trim().toLowerCase().equals("password"))
+        if(u.getPassword().trim().equals("") || 
+           u.getPassword().trim().toLowerCase().equals("password"))
         {
             jPasswordField.setText("password");
             jPasswordField.setForeground(new Color(153,153,153));
@@ -428,18 +431,19 @@ ResultSet  rs = null;
         
         
         // get the username & password
-        String username = jTextField_Username.getText();
-        String password = String.valueOf(jPasswordField.getPassword());
+        Utilisateur u = new Utilisateur();
+        u.setLogin(jTextField_Username.getText());
+        u.setPassword(String.valueOf(jPasswordField.getPassword()));
         
         //create a select query to check if the username and the password exist in the database
         String query = "Select * from utilisateur where login=? and password=?";
         
         // show a message if the username or the password fields are empty
-        if(username.trim().equals("username"))
+        if(u.getLogin().trim().equals("username"))
         {
             JOptionPane.showMessageDialog(null, "Enter Your Username", "Empty Username", 2);
         }
-        else if(password.trim().equals("password"))
+        else if(u.getPassword().trim().equals("password"))
         {
             JOptionPane.showMessageDialog(null, "Enter Your Password", "Empty Password", 2);
         }
@@ -448,8 +452,8 @@ ResultSet  rs = null;
             try {
             pst =conn.prepareStatement(query);
             
-            pst.setString(1, username);
-            pst.setString(2, password);
+            pst.setString(1, u.getLogin());
+            pst.setString(2, u.getPassword());
             rs= pst.executeQuery();
             
             if(rs.next())
