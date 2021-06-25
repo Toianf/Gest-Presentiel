@@ -7,9 +7,11 @@ import java.awt.Component;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -18,6 +20,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.ListModel;
 import javax.swing.border.Border;
 
 /*
@@ -34,8 +37,8 @@ public class Dashboard_Form extends javax.swing.JFrame {
     Connection conn = null;
     PreparedStatement pst = null;
     ResultSet rs = null;
-    ListSalarieModel model;
-    List<Salarie> listeSalarie;
+    ListSalarieModel model = Salarie.ChargerJlist();
+    
 
     // default border for the menu items
     Border default_border = BorderFactory.createMatteBorder(1, 0, 1, 0, new Color(46, 49, 49));
@@ -48,12 +51,12 @@ public class Dashboard_Form extends javax.swing.JFrame {
 
     // create an array of jpanels
     JPanel[] panels = new JPanel[7];
+    
 
     public Dashboard_Form() {
-        listeSalarie = new ArrayList<Salarie>(); //2 on l'instancie
-        model = new ListSalarieModel(listeSalarie);
-
+ 
         initComponents();
+        jList1.setModel(Salarie.ChargerJlist());
         // center this form
         this.setLocationRelativeTo(null);
 
@@ -78,7 +81,7 @@ public class Dashboard_Form extends javax.swing.JFrame {
 
         // populate the panels array
         panels[0] = jPanel_addSalarie;
-        panels[1] = jPanel_users;
+        panels[1] = jPanel_salaries;
         panels[2] = jPanel_products;
         panels[3] = jPanel_settings;
         panels[4] = jPanel_contact;
@@ -138,7 +141,7 @@ public class Dashboard_Form extends javax.swing.JFrame {
                                 break;
 
                             case "Gestion salarié":
-                                showPanel(jPanel_users);
+                                showPanel(jPanel_salaries);
                                 // jPanel_users.setBackground(Color.red);
                                 break;
 
@@ -239,7 +242,12 @@ public class Dashboard_Form extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
         jPanel_products = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jPanel_users = new javax.swing.JPanel();
+        jPanel_salaries = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jList1 = new javax.swing.JList<>();
+        jButton4 = new javax.swing.JButton();
         jPanel_settings = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jPanel_contact = new javax.swing.JPanel();
@@ -530,17 +538,60 @@ public class Dashboard_Form extends javax.swing.JFrame {
                 .addContainerGap(165, Short.MAX_VALUE))
         );
 
-        jPanel_users.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel_salaries.setBackground(new java.awt.Color(255, 255, 255));
 
-        javax.swing.GroupLayout jPanel_usersLayout = new javax.swing.GroupLayout(jPanel_users);
-        jPanel_users.setLayout(jPanel_usersLayout);
-        jPanel_usersLayout.setHorizontalGroup(
-            jPanel_usersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 747, Short.MAX_VALUE)
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel1.setText("GESTION DES SALARIÉS");
+
+        jButton2.setText("SUPPRIMER");
+
+        jList1.setModel(model);
+        jList1.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                jList1ValueChanged(evt);
+            }
+        });
+        jScrollPane2.setViewportView(jList1);
+
+        jButton4.setText("MODIFIER");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel_salariesLayout = new javax.swing.GroupLayout(jPanel_salaries);
+        jPanel_salaries.setLayout(jPanel_salariesLayout);
+        jPanel_salariesLayout.setHorizontalGroup(
+            jPanel_salariesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_salariesLayout.createSequentialGroup()
+                .addGroup(jPanel_salariesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(jPanel_salariesLayout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel_salariesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel_salariesLayout.createSequentialGroup()
+                            .addGap(260, 260, 260)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel_salariesLayout.createSequentialGroup()
+                            .addGap(46, 46, 46)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 652, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(49, Short.MAX_VALUE))
         );
-        jPanel_usersLayout.setVerticalGroup(
-            jPanel_usersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 520, Short.MAX_VALUE)
+        jPanel_salariesLayout.setVerticalGroup(
+            jPanel_salariesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_salariesLayout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 338, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel_salariesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(47, 47, 47))
         );
 
         jPanel_settings.setBackground(new java.awt.Color(255, 255, 255));
@@ -646,7 +697,7 @@ public class Dashboard_Form extends javax.swing.JFrame {
             .addGroup(jPanel_containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_containerLayout.createSequentialGroup()
                     .addContainerGap(196, Short.MAX_VALUE)
-                    .addComponent(jPanel_users, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel_salaries, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addContainerGap()))
             .addGroup(jPanel_containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_containerLayout.createSequentialGroup()
@@ -685,7 +736,7 @@ public class Dashboard_Form extends javax.swing.JFrame {
             .addGroup(jPanel_containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_containerLayout.createSequentialGroup()
                     .addContainerGap(34, Short.MAX_VALUE)
-                    .addComponent(jPanel_users, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel_salaries, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addContainerGap()))
             .addGroup(jPanel_containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_containerLayout.createSequentialGroup()
@@ -737,27 +788,11 @@ public class Dashboard_Form extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel_closeMouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-
-        Salarie s = new Salarie();
-        s.setNom(nomTxt.getText());
-        s.setPrenom(prenomTxt.getText());
-        s.setEmail(emailTxt.getText());
-        s.setProfession(professionTxt.getText());
-
+       
+      Salarie s = new Salarie();
+      s = s.addSalarie(nomTxt.getText(), prenomTxt.getText(), emailTxt.getText(), professionTxt.getText());
         
-
-        if (verifyFields()) {
-            String registerUserQuery = "INSERT INTO salarie(nom, prenom, email, profession) VALUES (?,?,?,?)";
-
-            try {
-                conn = MysqlConnect.ConnectDB();
-                pst = conn.prepareStatement(registerUserQuery);
-                pst.setString(1, s.getNom());
-                pst.setString(2, s.getPrenom());
-                pst.setString(3, s.getEmail());
-                pst.setString(4, s.getProfession());
-
-                if (pst.executeUpdate() != 0) {
+                if (s != null) {
                     JOptionPane.showMessageDialog(null, "Le salarié a bien été créer");
                     resultatTxt.append(s + " a été créé ! \n");
                     nomTxt.setText("");
@@ -769,31 +804,21 @@ public class Dashboard_Form extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "Erreur: Vérifier vos information ");
                 }
 
-            } catch (SQLException ex) {
-                Logger.getLogger(Register_Form.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-        }
-
     }//GEN-LAST:event_jButton1ActionPerformed
-    
-    
-    public boolean verifyFields() {
-        Salarie s = new Salarie();
-        s.setNom(nomTxt.getText());
-        s.setPrenom(prenomTxt.getText());
-        s.setProfession(professionTxt.getText());
 
-        // check empty fields
-        if (s.getNom().trim().equals("") || s.getPrenom().trim().equals("")
-                || s.getProfession().trim().equals("")) {
-            JOptionPane.showMessageDialog(null, "Un ou plusieur champs sont vides", "Champs Vides", 2);
-            return false;
-        } // if everything is ok
-        else {
-            return true;
+    private void jList1ValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jList1ValueChanged
+
+        if(!evt.getValueIsAdjusting()){
+            resultatTxt.append(jList1.getSelectedValue().toString()+"\n");
         }
-    }
+    }//GEN-LAST:event_jList1ValueChanged
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton4ActionPerformed
+    
+    
+
 
     /**
      * @param args the command line arguments
@@ -830,11 +855,16 @@ public class Dashboard_Form extends javax.swing.JFrame {
             }
         });
     }
+    
+
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField emailTxt;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -855,6 +885,7 @@ public class Dashboard_Form extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel_menuItem5;
     private javax.swing.JLabel jLabel_menuItem6;
     private javax.swing.JLabel jLabel_menuItem7;
+    public static javax.swing.JList<Salarie> jList1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel_addSalarie;
@@ -864,10 +895,11 @@ public class Dashboard_Form extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel_logoANDname;
     private javax.swing.JPanel jPanel_menu;
     private javax.swing.JPanel jPanel_products;
+    private javax.swing.JPanel jPanel_salaries;
     private javax.swing.JPanel jPanel_settings;
     private javax.swing.JPanel jPanel_test;
-    private javax.swing.JPanel jPanel_users;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField nomTxt;
     private javax.swing.JTextField prenomTxt;
     private javax.swing.JTextField professionTxt;

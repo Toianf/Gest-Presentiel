@@ -1,4 +1,5 @@
 com\mycompany\gestplanning\Register_Form.class
+com\mycompany\gestplanning\Dashboard_Form$5.class
 com\mycompany\gestplanning\Login_Form$2.class
 com\mycompany\gestplanning\Register_Form$5.class
 com\mycompany\gestplanning\Register_Form$3.class
@@ -6,6 +7,7 @@ com\mycompany\gestplanning\Login_Form$5.class
 com\mycompany\gestplanning\Login_Form$4.class
 com\mycompany\gestplanning\Register_Form$1.class
 com\mycompany\gestplanning\Dashboard_Form$2.class
+com\mycompany\gestplanning\Dashboard_Form$7.class
 com\mycompany\gestplanning\MysqlConnect.class
 com\mycompany\gestplanning\Register_Form$4.class
 com\mycompany\gestplanning\Login_Form$7.class
@@ -13,8 +15,10 @@ com\mycompany\gestplanning\Dashboard_Form$4.class
 com\mycompany\gestplanning\Login_Form$1.class
 com\mycompany\model\ListSalarieModel.class
 com\mycompany\gestplanning\Login_Form$8.class
+com\mycompany\gestplanning\Dashboard_Form$6.class
 com\mycompany\gestplanning\Register_Form$6.class
 com\mycompany\gestplanning\Login_Form.class
+com\mycompany\model\Observateur.class
 com\mycompany\gestplanning\Dashboard_Form$1.class
 com\mycompany\gestplanning\Register_Form$2.class
 com\mycompany\model\Utilisateur.class
@@ -22,4 +26,5 @@ com\mycompany\gestplanning\Dashboard_Form$3.class
 com\mycompany\gestplanning\Dashboard_Form.class
 com\mycompany\gestplanning\Login_Form$6.class
 com\mycompany\gestplanning\Login_Form$3.class
+com\mycompany\model\Sujet.class
 com\mycompany\model\Salarie.class
