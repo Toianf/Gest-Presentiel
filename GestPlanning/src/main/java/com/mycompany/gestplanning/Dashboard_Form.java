@@ -1,12 +1,22 @@
 package com.mycompany.gestplanning;
 
-
+import com.mycompany.model.ListSalarieModel;
+import com.mycompany.model.Salarie;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
@@ -15,47 +25,47 @@ import javax.swing.border.Border;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author 1BestCsharp
  */
 public class Dashboard_Form extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Dashboard_Form
-     */
-    
+    Connection conn = null;
+    PreparedStatement pst = null;
+    ResultSet rs = null;
+    ListSalarieModel model;
+    List<Salarie> listeSalarie;
+
     // default border for the menu items
-    Border default_border = BorderFactory.createMatteBorder(1, 0, 1, 0, new Color(46,49,49));
-        
+    Border default_border = BorderFactory.createMatteBorder(1, 0, 1, 0, new Color(46, 49, 49));
+
     // yellow border for the menu items
     Border yellow_border = BorderFactory.createMatteBorder(1, 0, 1, 0, Color.YELLOW);
-    
+
     // create an array of jlabels
     JLabel[] menuLabels = new JLabel[7];
-    
+
     // create an array of jpanels
     JPanel[] panels = new JPanel[7];
-    
+
     public Dashboard_Form() {
+        listeSalarie = new ArrayList<Salarie>(); //2 on l'instancie
+        model = new ListSalarieModel(listeSalarie);
+
         initComponents();
-        
         // center this form
         this.setLocationRelativeTo(null);
-        
-        // set icons
 
-        
-        
+        // set icons
         // set borders
         // panel logo border
         Border panelBorder = BorderFactory.createMatteBorder(0, 0, 2, 0, Color.lightGray);
         jPanel_logoANDname.setBorder(panelBorder);
         // panel container border
-        Border containerBorder = BorderFactory.createMatteBorder(1, 1, 1, 1, new Color(46,49,49));
+        Border containerBorder = BorderFactory.createMatteBorder(0, 0, 0, 0, new Color(46, 49, 49));
         jPanel_container.setBorder(containerBorder);
-        
+
         // populate the menuLabels array
         // you can use a for loop to do that
         menuLabels[0] = jLabel_menuItem1;
@@ -65,141 +75,131 @@ public class Dashboard_Form extends javax.swing.JFrame {
         menuLabels[4] = jLabel_menuItem5;
         menuLabels[5] = jLabel_menuItem6;
         menuLabels[6] = jLabel_menuItem7;
-        
+
         // populate the panels array
-        panels[0] = jPanel_dashboard;
+        panels[0] = jPanel_addSalarie;
         panels[1] = jPanel_users;
         panels[2] = jPanel_products;
         panels[3] = jPanel_settings;
         panels[4] = jPanel_contact;
         panels[5] = jPanel_calendar;
         panels[6] = jPanel_test;
-        
+
         addActionToMenuLabels();
-        
+
     }
 
-    
     // create a function to set the label background color
-    public void setLabelBackround(JLabel label)
-    {
+    public void setLabelBackround(JLabel label) {
         // reset labels to their default design
-        for (JLabel menuItem : menuLabels)
-        {
-           // change the jlabel background color to white
-           menuItem.setBackground(new Color(46,49,49));
-           // change the jlabel Foreground color to blue
-           menuItem.setForeground(Color.white); 
+        for (JLabel menuItem : menuLabels) {
+            // change the jlabel background color to white
+            menuItem.setBackground(new Color(46, 49, 49));
+            // change the jlabel Foreground color to blue
+            menuItem.setForeground(Color.white);
         }
-        
+
         // change the jlabel background color to white
         label.setBackground(Color.white);
         // change the jlabel Foreground color to blue
         label.setForeground(Color.blue);
     }
-    
+
     // create a function to show the selected panel
-    public void showPanel(JPanel panel)
-    {
+    public void showPanel(JPanel panel) {
         // hide panels
-        for (JPanel pnl : panels) 
-        {
+        for (JPanel pnl : panels) {
             pnl.setVisible(false);
         }
-        
+
         // and show only this panel
         panel.setVisible(true);
     }
-    
-    
-    
-    public void addActionToMenuLabels()
-    {
+
+    public void addActionToMenuLabels() {
         // get labels in the jpanel menu
         Component[] components = jPanel_menu.getComponents();
-        
+
         for (Component component : components) {
-            if(component instanceof JLabel)
-            {
+            if (component instanceof JLabel) {
                 JLabel label = (JLabel) component;
-                
+
                 label.addMouseListener(new MouseListener() {
                     @Override
                     public void mouseClicked(MouseEvent e) {
-                        
+
                         // change the jlabel background and Foreground
                         setLabelBackround(label);
-                        
+
                         // displa the selected panel
-                        switch (label.getText().trim()){
-                            case "Dashboard":
-                                   showPanel(jPanel_dashboard);
-                                   break;
-                                   
-                            case "Users":
-                                   showPanel(jPanel_users);
-                                   // jPanel_users.setBackground(Color.red);
-                                   break;
-                                   
+                        switch (label.getText().trim()) {
+                            case "Ajout salarié":
+                                showPanel(jPanel_addSalarie);
+                                break;
+
+                            case "Gestion salarié":
+                                showPanel(jPanel_users);
+                                // jPanel_users.setBackground(Color.red);
+                                break;
+
                             case "Products":
-                                   showPanel(jPanel_products);
-                                   // jPanel_products.setBackground(Color.BLUE);
-                                   break;
-                                   
-                                   case "Settings":
-                                   showPanel(jPanel_settings);
-                                   // jPanel_settings.setBackground(Color.GRAY);
-                                   break;
-                                   
-                                   case "Contact":
-                                   showPanel(jPanel_contact);
-                                   // jPanel_contact.setBackground(Color.GREEN);
-                                   break;
-                                   
-                                   case "Calendar":
-                                   showPanel(jPanel_calendar);
-                                   // jPanel_calendar.setBackground(Color.yellow);
-                                   break;
-                                   
-                                   case "Test":
-                                   showPanel(jPanel_test);
-                                   // jPanel_test.setBackground(Color.orange);
-                                   break;
-                                   
+                                showPanel(jPanel_products);
+                                // jPanel_products.setBackground(Color.BLUE);
+                                break;
+
+                            case "Settings":
+                                showPanel(jPanel_settings);
+                                // jPanel_settings.setBackground(Color.GRAY);
+                                break;
+
+                            case "Contact":
+                                showPanel(jPanel_contact);
+                                // jPanel_contact.setBackground(Color.GREEN);
+                                break;
+
+                            case "Calendar":
+                                showPanel(jPanel_calendar);
+                                // jPanel_calendar.setBackground(Color.yellow);
+                                break;
+
+                            case "Test":
+                                showPanel(jPanel_test);
+                                // jPanel_test.setBackground(Color.orange);
+                                break;
+
                         }
-                        
-                      }
+
+                    }
 
                     @Override
                     public void mousePressed(MouseEvent e) {
-                     }
+                    }
 
                     @Override
                     public void mouseReleased(MouseEvent e) {
-                      }
+                    }
 
                     @Override
                     public void mouseEntered(MouseEvent e) {
-                        
+
                         // set the border to yellow
                         label.setBorder(yellow_border);
-                        
-                      }
+
+                    }
 
                     @Override
                     public void mouseExited(MouseEvent e) {
-                        
+
                         // reset to the default border
                         label.setBorder(default_border);
-                        
-                      }
+
+                    }
                 });
-                
+
             }
         }
     }
-    
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -223,11 +223,23 @@ public class Dashboard_Form extends javax.swing.JFrame {
         jLabel_menuItem7 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel_close = new javax.swing.JLabel();
-        jPanel_dashboard = new javax.swing.JPanel();
+        jPanel_addSalarie = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        nomTxt = new javax.swing.JTextField();
+        prenomTxt = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
+        jLabel10 = new javax.swing.JLabel();
+        emailTxt = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        resultatTxt = new javax.swing.JTextArea();
+        professionTxt = new javax.swing.JTextField();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
         jPanel_products = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jPanel_users = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
         jPanel_settings = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jPanel_contact = new javax.swing.JPanel();
@@ -270,14 +282,14 @@ public class Dashboard_Form extends javax.swing.JFrame {
                 .addGap(19, 19, 19)
                 .addGroup(jPanel_logoANDnameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel_appLogo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE))
-                .addContainerGap(31, Short.MAX_VALUE))
+                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jLabel_menuItem1.setBackground(new java.awt.Color(46, 49, 49));
         jLabel_menuItem1.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jLabel_menuItem1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel_menuItem1.setText("  Dashboard");
+        jLabel_menuItem1.setText("  Ajout salarié");
         jLabel_menuItem1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel_menuItem1.setOpaque(true);
 
@@ -291,7 +303,7 @@ public class Dashboard_Form extends javax.swing.JFrame {
         jLabel_menuItem2.setBackground(new java.awt.Color(46, 49, 49));
         jLabel_menuItem2.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jLabel_menuItem2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel_menuItem2.setText("  Users");
+        jLabel_menuItem2.setText("  Gestion salarié");
         jLabel_menuItem2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel_menuItem2.setOpaque(true);
 
@@ -328,7 +340,7 @@ public class Dashboard_Form extends javax.swing.JFrame {
         jPanel_menuLayout.setHorizontalGroup(
             jPanel_menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel_logoANDname, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jLabel_menuItem1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+            .addComponent(jLabel_menuItem1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jLabel_menuItem4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jLabel_menuItem2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jLabel_menuItem3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -382,23 +394,121 @@ public class Dashboard_Form extends javax.swing.JFrame {
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel_close, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
+            .addComponent(jLabel_close, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        jPanel_dashboard.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel_addSalarie.setBackground(new java.awt.Color(255, 255, 255));
 
-        javax.swing.GroupLayout jPanel_dashboardLayout = new javax.swing.GroupLayout(jPanel_dashboard);
-        jPanel_dashboard.setLayout(jPanel_dashboardLayout);
-        jPanel_dashboardLayout.setHorizontalGroup(
-            jPanel_dashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 912, Short.MAX_VALUE)
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setToolTipText("Formulaire création d'utilisateur");
+
+        jLabel7.setText("Nom :");
+
+        jLabel9.setText("Prénom :");
+
+        jButton1.setText("Valider");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jLabel10.setText("Email :");
+
+        jScrollPane1.setBorder(javax.swing.BorderFactory.createTitledBorder("Résultat:"));
+
+        resultatTxt.setEditable(false);
+        resultatTxt.setColumns(20);
+        resultatTxt.setRows(5);
+        jScrollPane1.setViewportView(resultatTxt);
+
+        jLabel12.setText("Profession :");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel9)
+                                    .addComponent(jLabel7))
+                                .addGap(72, 72, 72)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(nomTxt)
+                                    .addComponent(prenomTxt)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel10)
+                                    .addComponent(jLabel12))
+                                .addGap(58, 58, 58)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(professionTxt)
+                                    .addComponent(emailTxt)
+                                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 582, Short.MAX_VALUE)))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addComponent(jScrollPane1)))
+                .addContainerGap())
         );
-        jPanel_dashboardLayout.setVerticalGroup(
-            jPanel_dashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 465, Short.MAX_VALUE)
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(nomTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(prenomTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10)
+                    .addComponent(emailTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(professionTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel12))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(51, 51, 51))
+        );
+
+        jLabel11.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel11.setText("AJOUTER UN SALARIÉ");
+
+        javax.swing.GroupLayout jPanel_addSalarieLayout = new javax.swing.GroupLayout(jPanel_addSalarie);
+        jPanel_addSalarie.setLayout(jPanel_addSalarieLayout);
+        jPanel_addSalarieLayout.setHorizontalGroup(
+            jPanel_addSalarieLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_addSalarieLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+            .addGroup(jPanel_addSalarieLayout.createSequentialGroup()
+                .addGap(278, 278, 278)
+                .addComponent(jLabel11)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel_addSalarieLayout.setVerticalGroup(
+            jPanel_addSalarieLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_addSalarieLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         jPanel_products.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel_products.setPreferredSize(new java.awt.Dimension(0, 0));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         jLabel2.setText("Products");
@@ -410,36 +520,27 @@ public class Dashboard_Form extends javax.swing.JFrame {
             .addGroup(jPanel_productsLayout.createSequentialGroup()
                 .addGap(400, 400, 400)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(311, Short.MAX_VALUE))
+                .addContainerGap(50, Short.MAX_VALUE))
         );
         jPanel_productsLayout.setVerticalGroup(
             jPanel_productsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel_productsLayout.createSequentialGroup()
                 .addGap(145, 145, 145)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(164, Short.MAX_VALUE))
+                .addContainerGap(165, Short.MAX_VALUE))
         );
 
         jPanel_users.setBackground(new java.awt.Color(255, 255, 255));
-
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
-        jLabel1.setText("Users");
 
         javax.swing.GroupLayout jPanel_usersLayout = new javax.swing.GroupLayout(jPanel_users);
         jPanel_users.setLayout(jPanel_usersLayout);
         jPanel_usersLayout.setHorizontalGroup(
             jPanel_usersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel_usersLayout.createSequentialGroup()
-                .addGap(400, 400, 400)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(406, Short.MAX_VALUE))
+            .addGap(0, 747, Short.MAX_VALUE)
         );
         jPanel_usersLayout.setVerticalGroup(
             jPanel_usersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel_usersLayout.createSequentialGroup()
-                .addGap(145, 145, 145)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(166, Short.MAX_VALUE))
+            .addGap(0, 520, Short.MAX_VALUE)
         );
 
         jPanel_settings.setBackground(new java.awt.Color(255, 255, 255));
@@ -454,14 +555,14 @@ public class Dashboard_Form extends javax.swing.JFrame {
             .addGroup(jPanel_settingsLayout.createSequentialGroup()
                 .addGap(400, 400, 400)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(383, Short.MAX_VALUE))
+                .addContainerGap(116, Short.MAX_VALUE))
         );
         jPanel_settingsLayout.setVerticalGroup(
             jPanel_settingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel_settingsLayout.createSequentialGroup()
                 .addGap(145, 145, 145)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(167, Short.MAX_VALUE))
+                .addContainerGap(162, Short.MAX_VALUE))
         );
 
         jPanel_contact.setBackground(new java.awt.Color(255, 255, 255));
@@ -476,14 +577,14 @@ public class Dashboard_Form extends javax.swing.JFrame {
             .addGroup(jPanel_contactLayout.createSequentialGroup()
                 .addGap(400, 400, 400)
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(380, Short.MAX_VALUE))
+                .addContainerGap(116, Short.MAX_VALUE))
         );
         jPanel_contactLayout.setVerticalGroup(
             jPanel_contactLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel_contactLayout.createSequentialGroup()
                 .addGap(145, 145, 145)
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(169, Short.MAX_VALUE))
+                .addContainerGap(160, Short.MAX_VALUE))
         );
 
         jPanel_calendar.setBackground(new java.awt.Color(255, 255, 255));
@@ -498,14 +599,14 @@ public class Dashboard_Form extends javax.swing.JFrame {
             .addGroup(jPanel_calendarLayout.createSequentialGroup()
                 .addGap(400, 400, 400)
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(379, Short.MAX_VALUE))
+                .addContainerGap(118, Short.MAX_VALUE))
         );
         jPanel_calendarLayout.setVerticalGroup(
             jPanel_calendarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel_calendarLayout.createSequentialGroup()
                 .addGap(145, 145, 145)
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(169, Short.MAX_VALUE))
+                .addContainerGap(164, Short.MAX_VALUE))
         );
 
         jPanel_test.setBackground(new java.awt.Color(255, 255, 255));
@@ -520,14 +621,14 @@ public class Dashboard_Form extends javax.swing.JFrame {
             .addGroup(jPanel_testLayout.createSequentialGroup()
                 .addGap(400, 400, 400)
                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(380, Short.MAX_VALUE))
+                .addContainerGap(115, Short.MAX_VALUE))
         );
         jPanel_testLayout.setVerticalGroup(
             jPanel_testLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel_testLayout.createSequentialGroup()
                 .addGap(145, 145, 145)
                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(167, Short.MAX_VALUE))
+                .addContainerGap(158, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel_containerLayout = new javax.swing.GroupLayout(jPanel_container);
@@ -539,68 +640,81 @@ public class Dashboard_Form extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel_containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_containerLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jPanel_dashboard, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel_containerLayout.createSequentialGroup()
+                        .addComponent(jPanel_addSalarie, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addContainerGap())))
             .addGroup(jPanel_containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_containerLayout.createSequentialGroup()
-                    .addGap(0, 207, Short.MAX_VALUE)
-                    .addComponent(jPanel_users, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addContainerGap(196, Short.MAX_VALUE)
+                    .addComponent(jPanel_users, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap()))
             .addGroup(jPanel_containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_containerLayout.createSequentialGroup()
-                    .addGap(0, 207, Short.MAX_VALUE)
-                    .addComponent(jPanel_products, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addContainerGap(196, Short.MAX_VALUE)
+                    .addComponent(jPanel_products, javax.swing.GroupLayout.PREFERRED_SIZE, 660, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap()))
             .addGroup(jPanel_containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_containerLayout.createSequentialGroup()
-                    .addGap(0, 202, Short.MAX_VALUE)
-                    .addComponent(jPanel_settings, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addContainerGap(197, Short.MAX_VALUE)
+                    .addComponent(jPanel_settings, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap()))
             .addGroup(jPanel_containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_containerLayout.createSequentialGroup()
-                    .addGap(0, 205, Short.MAX_VALUE)
-                    .addComponent(jPanel_contact, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addContainerGap(197, Short.MAX_VALUE)
+                    .addComponent(jPanel_contact, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap()))
             .addGroup(jPanel_containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_containerLayout.createSequentialGroup()
-                    .addGap(0, 206, Short.MAX_VALUE)
-                    .addComponent(jPanel_calendar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addContainerGap(195, Short.MAX_VALUE)
+                    .addComponent(jPanel_calendar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap()))
             .addGroup(jPanel_containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_containerLayout.createSequentialGroup()
-                    .addGap(0, 205, Short.MAX_VALUE)
-                    .addComponent(jPanel_test, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addContainerGap(198, Short.MAX_VALUE)
+                    .addComponent(jPanel_test, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap()))
         );
         jPanel_containerLayout.setVerticalGroup(
             jPanel_containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel_menu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel_containerLayout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel_dashboard, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel_addSalarie, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(jPanel_containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_containerLayout.createSequentialGroup()
-                    .addGap(0, 42, Short.MAX_VALUE)
-                    .addComponent(jPanel_users, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addContainerGap(34, Short.MAX_VALUE)
+                    .addComponent(jPanel_users, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap()))
             .addGroup(jPanel_containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_containerLayout.createSequentialGroup()
-                    .addGap(0, 44, Short.MAX_VALUE)
-                    .addComponent(jPanel_products, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addContainerGap(32, Short.MAX_VALUE)
+                    .addComponent(jPanel_products, javax.swing.GroupLayout.PREFERRED_SIZE, 476, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap()))
             .addGroup(jPanel_containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_containerLayout.createSequentialGroup()
-                    .addGap(0, 41, Short.MAX_VALUE)
-                    .addComponent(jPanel_settings, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addContainerGap(35, Short.MAX_VALUE)
+                    .addComponent(jPanel_settings, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap()))
             .addGroup(jPanel_containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_containerLayout.createSequentialGroup()
-                    .addGap(0, 39, Short.MAX_VALUE)
-                    .addComponent(jPanel_contact, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addContainerGap(37, Short.MAX_VALUE)
+                    .addComponent(jPanel_contact, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap()))
             .addGroup(jPanel_containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_containerLayout.createSequentialGroup()
-                    .addGap(0, 39, Short.MAX_VALUE)
-                    .addComponent(jPanel_calendar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addContainerGap(33, Short.MAX_VALUE)
+                    .addComponent(jPanel_calendar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap()))
             .addGroup(jPanel_containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_containerLayout.createSequentialGroup()
-                    .addGap(0, 41, Short.MAX_VALUE)
-                    .addComponent(jPanel_test, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addContainerGap(39, Short.MAX_VALUE)
+                    .addComponent(jPanel_test, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap()))
         );
+
+        jPanel_contact.getAccessibleContext().setAccessibleName("");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -621,6 +735,65 @@ public class Dashboard_Form extends javax.swing.JFrame {
         this.dispose();
 
     }//GEN-LAST:event_jLabel_closeMouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+
+        Salarie s = new Salarie();
+        s.setNom(nomTxt.getText());
+        s.setPrenom(prenomTxt.getText());
+        s.setEmail(emailTxt.getText());
+        s.setProfession(professionTxt.getText());
+
+        
+
+        if (verifyFields()) {
+            String registerUserQuery = "INSERT INTO salarie(nom, prenom, email, profession) VALUES (?,?,?,?)";
+
+            try {
+                conn = MysqlConnect.ConnectDB();
+                pst = conn.prepareStatement(registerUserQuery);
+                pst.setString(1, s.getNom());
+                pst.setString(2, s.getPrenom());
+                pst.setString(3, s.getEmail());
+                pst.setString(4, s.getProfession());
+
+                if (pst.executeUpdate() != 0) {
+                    JOptionPane.showMessageDialog(null, "Le salarié a bien été créer");
+                    resultatTxt.append(s + " a été créé ! \n");
+                    nomTxt.setText("");
+                    prenomTxt.setText("");
+                    professionTxt.setText("");
+                    emailTxt.setText("");
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "Erreur: Vérifier vos information ");
+                }
+
+            } catch (SQLException ex) {
+                Logger.getLogger(Register_Form.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+
+    }//GEN-LAST:event_jButton1ActionPerformed
+    
+    
+    public boolean verifyFields() {
+        Salarie s = new Salarie();
+        s.setNom(nomTxt.getText());
+        s.setPrenom(prenomTxt.getText());
+        s.setProfession(professionTxt.getText());
+
+        // check empty fields
+        if (s.getNom().trim().equals("") || s.getPrenom().trim().equals("")
+                || s.getProfession().trim().equals("")) {
+            JOptionPane.showMessageDialog(null, "Un ou plusieur champs sont vides", "Champs Vides", 2);
+            return false;
+        } // if everything is ok
+        else {
+            return true;
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -658,14 +831,21 @@ public class Dashboard_Form extends javax.swing.JFrame {
         });
     }
 
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JTextField emailTxt;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabel_appLogo;
     private javax.swing.JLabel jLabel_close;
     private javax.swing.JLabel jLabel_menuItem1;
@@ -675,16 +855,22 @@ public class Dashboard_Form extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel_menuItem5;
     private javax.swing.JLabel jLabel_menuItem6;
     private javax.swing.JLabel jLabel_menuItem7;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel_addSalarie;
     private javax.swing.JPanel jPanel_calendar;
     private javax.swing.JPanel jPanel_contact;
     private javax.swing.JPanel jPanel_container;
-    private javax.swing.JPanel jPanel_dashboard;
     private javax.swing.JPanel jPanel_logoANDname;
     private javax.swing.JPanel jPanel_menu;
     private javax.swing.JPanel jPanel_products;
     private javax.swing.JPanel jPanel_settings;
     private javax.swing.JPanel jPanel_test;
     private javax.swing.JPanel jPanel_users;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField nomTxt;
+    private javax.swing.JTextField prenomTxt;
+    private javax.swing.JTextField professionTxt;
+    private javax.swing.JTextArea resultatTxt;
     // End of variables declaration//GEN-END:variables
 }

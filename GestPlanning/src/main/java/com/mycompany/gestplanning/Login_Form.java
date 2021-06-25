@@ -87,13 +87,18 @@ ResultSet  rs = null;
 
         jTextField_Username.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jTextField_Username.setForeground(new java.awt.Color(153, 153, 153));
-        jTextField_Username.setText("username");
+        jTextField_Username.setText("nom d'utilisateur");
         jTextField_Username.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 jTextField_UsernameFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 jTextField_UsernameFocusLost(evt);
+            }
+        });
+        jTextField_Username.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField_UsernameActionPerformed(evt);
             }
         });
 
@@ -112,7 +117,7 @@ ResultSet  rs = null;
         jButton_Login.setBackground(new java.awt.Color(0, 84, 140));
         jButton_Login.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 24)); // NOI18N
         jButton_Login.setForeground(new java.awt.Color(255, 255, 255));
-        jButton_Login.setText("Login");
+        jButton_Login.setText("SE CONNECTER");
         jButton_Login.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton_Login.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -130,7 +135,7 @@ ResultSet  rs = null;
 
         jLabel_Create_Account.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel_Create_Account.setForeground(new java.awt.Color(255, 51, 51));
-        jLabel_Create_Account.setText(">> No Account? Create One!");
+        jLabel_Create_Account.setText(">> Vous n'avez pas de compte? Créer en une !");
         jLabel_Create_Account.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel_Create_Account.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -145,7 +150,7 @@ ResultSet  rs = null;
         });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel1.setText("PASSWORD :");
+        jLabel1.setText("MOT DE PASSE :");
         jLabel1.setName(""); // NOI18N
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -159,20 +164,20 @@ ResultSet  rs = null;
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(153, 153, 153)
-                        .addComponent(jLabel_Create_Account))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(35, 35, 35)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 18, 18)
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel1))
+                                .addGap(22, 22, 22)
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextField_Username, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(jButton_Login, javax.swing.GroupLayout.PREFERRED_SIZE, 395, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(jTextField_Username, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jButton_Login, javax.swing.GroupLayout.PREFERRED_SIZE, 395, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(84, 84, 84)
+                        .addComponent(jLabel_Create_Account)))
                 .addContainerGap(32, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -188,9 +193,9 @@ ResultSet  rs = null;
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(26, 26, 26)
                 .addComponent(jButton_Login, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel_Create_Account)
-                .addGap(23, 23, 23))
+                .addGap(32, 32, 32))
         );
 
         jLabel_minimize.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -226,14 +231,14 @@ ResultSet  rs = null;
         jPanel_title.setBackground(new java.awt.Color(255, 255, 0));
 
         jLabel3.setFont(new java.awt.Font("Arial", 1, 38)); // NOI18N
-        jLabel3.setText("Login");
+        jLabel3.setText("CONNEXION");
 
         javax.swing.GroupLayout jPanel_titleLayout = new javax.swing.GroupLayout(jPanel_title);
         jPanel_title.setLayout(jPanel_titleLayout);
         jPanel_titleLayout.setHorizontalGroup(
             jPanel_titleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_titleLayout.createSequentialGroup()
-                .addContainerGap(45, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel3)
                 .addGap(42, 42, 42))
         );
@@ -252,8 +257,8 @@ ResultSet  rs = null;
             .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel_title, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(89, 89, 89)
+                .addComponent(jPanel_title, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(52, 52, 52)
                 .addComponent(jLabel_minimize, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel_close, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -338,7 +343,7 @@ ResultSet  rs = null;
     private void jTextField_UsernameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_UsernameFocusGained
         
         // clear the textfield on focus if the text is "username"
-        if(jTextField_Username.getText().trim().toLowerCase().equals("username"))
+        if(jTextField_Username.getText().trim().toLowerCase().equals("nom d'utilisateur"))
         {
             jTextField_Username.setText("");
             jTextField_Username.setForeground(Color.black);
@@ -355,9 +360,9 @@ ResultSet  rs = null;
         // on focus lost event
         
         if(jTextField_Username.getText().trim().equals("") || 
-           jTextField_Username.getText().trim().toLowerCase().equals("username"))
+           jTextField_Username.getText().trim().toLowerCase().equals("nom d'utilisateur"))
         {
-            jTextField_Username.setText("username");
+            jTextField_Username.setText("nom d'utilisateur");
             jTextField_Username.setForeground(new Color(153,153,153));
         }
         
@@ -439,13 +444,13 @@ ResultSet  rs = null;
         String query = "Select * from utilisateur where login=? and password=?";
         
         // show a message if the username or the password fields are empty
-        if(u.getLogin().trim().equals("username"))
+        if(u.getLogin().trim().equals("nom d'utilisateur"))
         {
-            JOptionPane.showMessageDialog(null, "Enter Your Username", "Empty Username", 2);
+            JOptionPane.showMessageDialog(null, "Veuillez entrer un nom d'utilisateur", "Champ nom d'utilisateur vide", 2);
         }
         else if(u.getPassword().trim().equals("password"))
         {
-            JOptionPane.showMessageDialog(null, "Enter Your Password", "Empty Password", 2);
+            JOptionPane.showMessageDialog(null, "Veuillez entré un mot de passe", "Champs mot de passe vide", 2);
         }
         else{
             
@@ -459,7 +464,7 @@ ResultSet  rs = null;
             if(rs.next())
             {
                 // show a new form
-                JOptionPane.showMessageDialog(null, "Welcome user");
+                JOptionPane.showMessageDialog(null, "Bienvenue !");
                 Dashboard_Form form = new Dashboard_Form();
                 form.setVisible(true);
                 form.pack();
@@ -468,7 +473,7 @@ ResultSet  rs = null;
                 
             }else{
                 // error message
-                JOptionPane.showMessageDialog(null, "Invalid Username / Password","Login Error",2);
+                JOptionPane.showMessageDialog(null, " Nom d'utilisateur / Mot de passe incorrect","Erreur d'authentification",2);
             }
             
         } catch (SQLException ex) {
@@ -502,6 +507,10 @@ ResultSet  rs = null;
         this.dispose();
         
     }//GEN-LAST:event_jLabel_Create_AccountMouseClicked
+
+    private void jTextField_UsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_UsernameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField_UsernameActionPerformed
 
     /**
      * @param args the command line arguments

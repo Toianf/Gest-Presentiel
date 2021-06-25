@@ -6,16 +6,16 @@ public class Salarie {
     private Integer id;   
     private String nom;
     private String prenom;
-    private String genre;
+    private String email;
     private String profession;
        
     public Salarie() {
     }
-    public Salarie(Integer id, String nom, String prenom, String genre, String profession) {
+    public Salarie(Integer id, String nom, String prenom, String email, String profession) {
         this.id = id;
         this.nom = nom;
         this.prenom = prenom;
-        this.genre = genre;
+        this.email = email;
         this.profession = profession;
     }
     
@@ -43,12 +43,12 @@ public class Salarie {
         this.prenom = prenom;
     }
 
-    public String getGenre() {
-        return genre;
+    public String getEmail() {
+        return email;
     }
 
-    public void setGenre(String genre) {
-        this.genre = genre;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getProfession() {
@@ -61,7 +61,7 @@ public class Salarie {
    
     @Override
     public String toString() {
-        return "nom : " + nom + ", prenom : " + prenom + ", genre : " + genre + ", profession : " + profession;
+        return "Le salarié nom : " + nom + ", prenom : " + prenom + ", email : "+ email + ", profession : "+ profession;
     }
 
     

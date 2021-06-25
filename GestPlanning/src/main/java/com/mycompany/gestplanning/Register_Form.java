@@ -7,7 +7,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.border.Border;
@@ -118,15 +117,15 @@ ResultSet  rs = null;
         jTextField_Fullname.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel2.setText("Username:");
+        jLabel2.setText("Nom d'utilisateur :");
 
         jTextField_Username.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel4.setText("Password:");
+        jLabel4.setText("Mot de passe :");
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel5.setText("Confirm Password:");
+        jLabel5.setText("Confirm mot de passe :");
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel7.setText("Gender:");
@@ -144,7 +143,7 @@ ResultSet  rs = null;
 
         jLabel_login.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel_login.setForeground(new java.awt.Color(0, 204, 0));
-        jLabel_login.setText(">> Already Have an Account? Login!");
+        jLabel_login.setText(">> Vous êtes déja inscrit ? Connectez-vous !");
         jLabel_login.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel_login.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -171,31 +170,6 @@ ResultSet  rs = null;
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(26, 26, 26)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jLabel2))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jTextField_Username)
-                                    .addComponent(jPasswordField_1, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel1)
-                                    .addComponent(jLabel5)
-                                    .addComponent(jLabel9))
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(jPanel3Layout.createSequentialGroup()
-                                        .addGap(1, 1, 1)
-                                        .addComponent(jPasswordField_2, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(jTextField_Fullname, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jTextField_Fullname1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(38, 38, 38)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jButton_Register, javax.swing.GroupLayout.PREFERRED_SIZE, 453, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -207,9 +181,33 @@ ResultSet  rs = null;
                                 .addComponent(jRadioButton_Female)
                                 .addGap(185, 185, 185))))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(145, 145, 145)
-                        .addComponent(jLabel_login)))
-                .addContainerGap(25, Short.MAX_VALUE))
+                        .addGap(120, 120, 120)
+                        .addComponent(jLabel_login))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPasswordField_2, javax.swing.GroupLayout.DEFAULT_SIZE, 339, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.TRAILING))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jTextField_Fullname, javax.swing.GroupLayout.DEFAULT_SIZE, 341, Short.MAX_VALUE)
+                                    .addComponent(jTextField_Fullname1)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jPasswordField_1, javax.swing.GroupLayout.DEFAULT_SIZE, 339, Short.MAX_VALUE)
+                                    .addComponent(jTextField_Username))))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -307,7 +305,7 @@ ResultSet  rs = null;
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel_title, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(87, 87, 87)
+                .addGap(99, 99, 99)
                 .addComponent(jLabel_minimize, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel_close, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -400,7 +398,7 @@ ResultSet  rs = null;
                      pst.setString(5, u.getPassword());
                                
                          if(pst.executeUpdate() != 0){
-                            JOptionPane.showMessageDialog(null, "Your Account Has Been Created");
+                            JOptionPane.showMessageDialog(null, "Votre compte a bien été créer");
                         jTextField_Fullname1.setText("");
                         jTextField_Fullname.setText("");
                         jTextField_Username.setText("");
@@ -408,7 +406,7 @@ ResultSet  rs = null;
                         jPasswordField_2.setText("");
          
                          }else{
-                             JOptionPane.showMessageDialog(null, "Error: Check Your Information");
+                             JOptionPane.showMessageDialog(null, "Erreur: Vérifier vos Informations");
                          }
                          
 
@@ -502,14 +500,14 @@ ResultSet  rs = null;
         if(u.getNom().trim().equals("") || u.getPrenom().trim().equals("")
            || u.getLogin().trim().equals("") || u.getPassword().trim().equals("") || pass2.trim().equals(""))
         {
-            JOptionPane.showMessageDialog(null, "One Or More Fields Are Empty","Empty Fields",2);
+            JOptionPane.showMessageDialog(null, "Un ou plusieur champs sont vides","Champs Vides",2);
             return false;
         }
         
         // check if the two password are equals
         else if(!u.getPassword().equals(pass2))
         {
-           JOptionPane.showMessageDialog(null, "Password Doesn't Match","Confirm Password",2); 
+           JOptionPane.showMessageDialog(null, "Vos mot de passe ne correspondent","Confirmation mot de passe",2); 
            return false;
         }
         
@@ -536,7 +534,7 @@ ResultSet  rs = null;
             if(rs.next())
             {
                 username_exist = true;
-                JOptionPane.showMessageDialog(null, "This Username is Already Taken, Choose Another One", "Username Failed", 2);
+                JOptionPane.showMessageDialog(null, "Ce nom d'utilisateur existe déja, Veuillez a choisir un autre", "Nom d'utilisateur non valide", 2);
             }
             
         } catch (SQLException ex) {
