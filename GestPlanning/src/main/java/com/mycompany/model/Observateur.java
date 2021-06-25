@@ -9,6 +9,6 @@ package com.mycompany.model;
  *
  * @author Julien
  */
-public class Observateur {
-    public void Notify();
+public interface Observateur {
+    public void notifier();
 }

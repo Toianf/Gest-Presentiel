@@ -5,7 +5,15 @@
  */
 package com.mycompany.gestplanning;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Observable;
 import java.util.Observer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -16,10 +24,20 @@ public class PresenceJFrame extends javax.swing.JFrame implements Observer {
     /**
      * Creates new form SalarieJFrame
      */
-    public PresenceJFrame() {
-        
+    public PresenceJFrame() throws SQLException {
+
         initComponents();
-       
+        Connection conn = JdbcConnect.ConnectDB();
+        Statement pst = null;
+        ResultSet rs = null;
+
+        pst = conn.createStatement();
+        rs = pst.executeQuery("SELECT Nom, Prenom FROM Salarie");
+        while (rs.next()) {
+            //Pour affecter une valeur de base de données à un Combobox 
+            cmbSalarie.addItem(rs.getString("Nom" + "Prenom"));
+        }
+
     }
 
     /**
@@ -146,11 +164,11 @@ public class PresenceJFrame extends javax.swing.JFrame implements Observer {
     }// </editor-fold>//GEN-END:initComponents
 
     private void rbPresentielActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbPresentielActionPerformed
-       
+
     }//GEN-LAST:event_rbPresentielActionPerformed
 
     private void rbDistancielActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbDistancielActionPerformed
-        
+
     }//GEN-LAST:event_rbDistancielActionPerformed
 
     /**
@@ -184,7 +202,11 @@ public class PresenceJFrame extends javax.swing.JFrame implements Observer {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new PresenceJFrame().setVisible(true);
+                try {
+                    new PresenceJFrame().setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(PresenceJFrame.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
@@ -203,5 +225,9 @@ public class PresenceJFrame extends javax.swing.JFrame implements Observer {
     private javax.swing.JRadioButton rbDistanciel;
     private javax.swing.JRadioButton rbPresentiel;
     // End of variables declaration//GEN-END:variables
-}
 
+    @Override
+    public void update(Observable o, Object o1) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+}

@@ -19,7 +19,7 @@ import javax.swing.JOptionPane;
 
 public class Register_Form extends javax.swing.JFrame {
 
-Connection conn = MysqlConnect.ConnectDB();
+Connection conn = JdbcConnect.ConnectDB();
 PreparedStatement pst = null;
 ResultSet  rs = null;
     

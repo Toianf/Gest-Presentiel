@@ -6,6 +6,8 @@
 package com.mycompany.model;
 
 import com.mycompany.model.Sujet;
+import java.io.Serializable;
+import java.sql.Date;
 
 /**
  *
@@ -13,33 +15,33 @@ import com.mycompany.model.Sujet;
  */
 public class Presence extends Sujet implements Serializable{
     
-    private string EtatSalarie;
-    private date DateEtatSalarie;
-    private integer IdSalarie;
+    private String EtatSalarie;
+    private Date DateEtatSalarie;
+    private Integer IdSalarie;
 
-    public string getEtatSalarie() {
+    public String getEtatSalarie() {
         return EtatSalarie;
     }
 
-    public date getDateEtatSalarie() {
+    public Date getDateEtatSalarie() {
         return DateEtatSalarie;
     }
 
-    public integer getIdSalarie() {
+    public Integer getIdSalarie() {
         return IdSalarie;
     }
 
-    public void setEtatSalarie(string EtatSalarie) {
+    public void setEtatSalarie(String EtatSalarie) {
         this.EtatSalarie = EtatSalarie;
         this.notifierObservateur();
     }
 
-    public void setDateEtatSalarie(date DateEtatSalarie) {
+    public void setDateEtatSalarie(Date DateEtatSalarie) {
         this.DateEtatSalarie = DateEtatSalarie;
         this.notifierObservateur();
     }
 
-    public void setIdSalarie(integer IdSalarie) {
+    public void setIdSalarie(Integer IdSalarie) {
         this.IdSalarie = IdSalarie;
         this.notifierObservateur();
     }

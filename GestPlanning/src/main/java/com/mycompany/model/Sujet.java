@@ -5,29 +5,33 @@
  */
 package com.mycompany.model;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Observer;
+
 /**
  *
  * @author Julien
  */
 public class Sujet {
     
-    private Collection <Observer>  collectionObserver;
+    private Collection <Observateur>  collectionObserver;
     
     public Sujet(){
     collectionObserver = new ArrayList();
     }
 
-    public void AjouterCollectionObserver(Observer o) {
+    public void AjouterCollectionObserver(Observateur o) {
         collectionObserver.add(o);
     }
 
-    public void SupprimerCollectionObserver(Observer o) {
+    public void SupprimerCollectionObserver(Observateur o) {
         collectionObserver.remove(o);
     }
     
     public void notifierObservateur(){
-    for (Observer obs : collectionObserver){
-        obs.Notify();
+    for (Observateur obs : collectionObserver){
+        obs.notifier();
     }
     };
 }
