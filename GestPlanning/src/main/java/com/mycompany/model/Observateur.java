@@ -11,5 +11,4 @@ package com.mycompany.model;
  */
 public class Observateur {
     public void Notify();
-    private integer Test;
 }
