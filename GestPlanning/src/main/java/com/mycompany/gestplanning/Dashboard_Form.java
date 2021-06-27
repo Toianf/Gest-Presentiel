@@ -14,14 +14,11 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
-
 public class Dashboard_Form extends javax.swing.JFrame {
 
-    
     PreparedStatement pst = null;
     ResultSet rs = null;
     ListSalarieModel model = Salarie.ChargerJlist();
-    
 
     // default border for the menu items
     Border default_border = BorderFactory.createMatteBorder(1, 0, 1, 0, new Color(46, 49, 49));
@@ -34,10 +31,9 @@ public class Dashboard_Form extends javax.swing.JFrame {
 
     // create an array of jpanels
     JPanel[] panels = new JPanel[7];
-    
 
     public Dashboard_Form() {
- 
+
         initComponents();
         jList1.setModel(Salarie.ChargerJlist());
         // center this form
@@ -119,38 +115,18 @@ public class Dashboard_Form extends javax.swing.JFrame {
 
                         // displa the selected panel
                         switch (label.getText().trim()) {
-                            
-                            case "Gestion salarié":
-                                showPanel(jPanel_salaries);
-                                break;
-                            
+
                             case "Ajout salarié":
                                 showPanel(jPanel_addSalarie);
+                                break;
+
+                            case "Gestion salarié":
+                                showPanel(jPanel_salaries);
                                 break;
 
                             case "Products":
                                 showPanel(jPanel_products);
                                 // jPanel_products.setBackground(Color.BLUE);
-                                break;
-
-                            case "Settings":
-                                showPanel(jPanel_settings);
-                                // jPanel_settings.setBackground(Color.GRAY);
-                                break;
-
-                            case "Contact":
-                                showPanel(jPanel_contact);
-                                // jPanel_contact.setBackground(Color.GREEN);
-                                break;
-
-                            case "Calendar":
-                                showPanel(jPanel_calendar);
-                                // jPanel_calendar.setBackground(Color.yellow);
-                                break;
-
-                            case "Test":
-                                showPanel(jPanel_test);
-                                // jPanel_test.setBackground(Color.orange);
                                 break;
 
                         }
@@ -831,31 +807,31 @@ public class Dashboard_Form extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel_closeMouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       
-      Salarie s = new Salarie();
-      s = s.addSalarie(nomTxt.getText(), prenomTxt.getText(), emailTxt.getText(), professionTxt.getText());
-        
-                if (s != null) {
-                    nomTxt.setText("");
-                    prenomTxt.setText("");
-                    professionTxt.setText("");
-                    emailTxt.setText("");
 
-                } else {
-                    JOptionPane.showMessageDialog(null, "Erreur: Vérifier vos information ");
-                }
+        Salarie s = new Salarie();
+        s = s.addSalarie(nomTxt.getText(), prenomTxt.getText(), emailTxt.getText(), professionTxt.getText());
+
+        if (s != null) {
+            nomTxt.setText("");
+            prenomTxt.setText("");
+            professionTxt.setText("");
+            emailTxt.setText("");
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Erreur: Vérifier vos information ");
+        }
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-      Salarie s = new Salarie();
-      s = s.updateSalarie(jList1.getSelectedValue().getId(), jTextName.getText(), jTextPrenom.getText(), jTextEmail.getText(), jTextProfession.getText());
-        
-                if (s != null) {
-                   
-                } else {
-                    JOptionPane.showMessageDialog(null, "Erreur: Vérifier vos information ");
-                }
+        Salarie s = new Salarie();
+        s = s.updateSalarie(jList1.getSelectedValue().getId(), jTextName.getText(), jTextPrenom.getText(), jTextEmail.getText(), jTextProfession.getText());
+
+        if (s != null) {
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Erreur: Vérifier vos information ");
+        }
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jList1ValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jList1ValueChanged
@@ -869,23 +845,20 @@ public class Dashboard_Form extends javax.swing.JFrame {
         jTextPrenom.setText(jList1.getSelectedValue().getPrenom());
         jTextEmail.setText(jList1.getSelectedValue().getEmail());
         jTextProfession.setText(jList1.getSelectedValue().getProfession());
-        
+
     }//GEN-LAST:event_jList1MouseClicked
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-      Salarie s = new Salarie();
-      s = s.deleteSalarie(jList1.getSelectedValue().getId());
-        
-                if (s != null) {
-                    
-                } else {
-                    JOptionPane.showMessageDialog(null, "Erreur: Vérifier vos information ");
-                }
+        Salarie s = new Salarie();
+        s = s.deleteSalarie(jList1.getSelectedValue().getId());
+
+        if (s != null) {
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Erreur: Vérifier vos information ");
+        }
 
     }//GEN-LAST:event_jButton2ActionPerformed
-    
-    
-
 
     /**
      * @param args the command line arguments
@@ -922,8 +895,6 @@ public class Dashboard_Form extends javax.swing.JFrame {
             }
         });
     }
-    
-
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
