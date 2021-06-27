@@ -2,24 +2,23 @@ package com.mycompany.model;
 
 import java.util.List;
 import javax.swing.AbstractListModel;
-import javax.swing.ListModel;
 
 
-public class ListPersonneModel extends AbstractListModel {
-    public ListPersonneModel(List<Personne> liste) {
+public class ListSalarieModel extends AbstractListModel {
+    public ListSalarieModel(List<Salarie> liste) {
         this.liste = liste;
     }    
-    private List<Personne> liste;
+    private List<Salarie> liste;
 
-    public void setListe(List<Personne> liste) {
+    public void setListe(List<Salarie> liste) {
         this.liste = liste;
         this.fireContentsChanged(liste, 0, 0);
     }
-    public ListPersonneModel() {
+    public ListSalarieModel() {
     }    
    
-    public void addPersonne(Personne p){
-            this.liste.add(p);
+    public void addSalarie(Salarie s){
+            this.liste.add(s);
             this.fireContentsChanged(liste, 0, 0);
         }
 
@@ -33,7 +32,7 @@ public class ListPersonneModel extends AbstractListModel {
         return liste.get(index);
     }
 
-    public Iterable<Personne> getListe() {
+    public Iterable<Salarie> getListe() {
     return liste;
             }
 }

@@ -7,31 +7,26 @@ package com.mycompany.model;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Observer;
 
 /**
  *
- * @author Julien
+ * @author esoupapoule.cda
  */
 public class Sujet {
-    
-    private Collection <Observateur>  collectionObserver;
-    
+    private Collection<Observateur>  collectionObservateur;
     public Sujet(){
-    collectionObserver = new ArrayList();
+        collectionObservateur=new ArrayList();
     }
-
-    public void AjouterCollectionObserver(Observateur o) {
-        collectionObserver.add(o);
+    public  void ajouterObser(Observateur o) {
+        collectionObservateur.add(o);
     }
-
-    public void SupprimerCollectionObserver(Observateur o) {
-        collectionObserver.remove(o);
+    public  void supprimerObser(Observateur o) {
+        collectionObservateur.remove(o);
+    }
+    public  void notifierObser() {
+        for(Observateur obs : collectionObservateur){
+            obs.notifier();
+        }
     }
     
-    public void notifierObservateur(){
-    for (Observateur obs : collectionObserver){
-        obs.notifier();
-    }
-    };
 }

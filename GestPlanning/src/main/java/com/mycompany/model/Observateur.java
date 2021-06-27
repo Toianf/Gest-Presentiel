@@ -5,10 +5,6 @@
  */
 package com.mycompany.model;
 
-/**
- *
- * @author Julien
- */
 public interface Observateur {
     public void notifier();
 }
