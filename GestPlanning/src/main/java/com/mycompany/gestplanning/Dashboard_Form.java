@@ -128,30 +128,6 @@ public class Dashboard_Form extends javax.swing.JFrame {
                                 showPanel(jPanel_addSalarie);
                                 break;
 
-                            case "Products":
-                                showPanel(jPanel_products);
-                                // jPanel_products.setBackground(Color.BLUE);
-                                break;
-
-                            case "Settings":
-                                showPanel(jPanel_settings);
-                                // jPanel_settings.setBackground(Color.GRAY);
-                                break;
-
-                            case "Contact":
-                                showPanel(jPanel_contact);
-                                // jPanel_contact.setBackground(Color.GREEN);
-                                break;
-
-                            case "Calendar":
-                                showPanel(jPanel_calendar);
-                                // jPanel_calendar.setBackground(Color.yellow);
-                                break;
-
-                            case "Test":
-                                showPanel(jPanel_test);
-                                // jPanel_test.setBackground(Color.orange);
-                                break;
 
                         }
 
@@ -295,7 +271,6 @@ public class Dashboard_Form extends javax.swing.JFrame {
         jLabel_menuItem3.setBackground(new java.awt.Color(46, 49, 49));
         jLabel_menuItem3.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jLabel_menuItem3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel_menuItem3.setText("  Products");
         jLabel_menuItem3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel_menuItem3.setOpaque(true);
 
@@ -309,28 +284,24 @@ public class Dashboard_Form extends javax.swing.JFrame {
         jLabel_menuItem4.setBackground(new java.awt.Color(46, 49, 49));
         jLabel_menuItem4.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jLabel_menuItem4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel_menuItem4.setText("  Settings");
         jLabel_menuItem4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel_menuItem4.setOpaque(true);
 
         jLabel_menuItem5.setBackground(new java.awt.Color(46, 49, 49));
         jLabel_menuItem5.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jLabel_menuItem5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel_menuItem5.setText("  Contact");
         jLabel_menuItem5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel_menuItem5.setOpaque(true);
 
         jLabel_menuItem6.setBackground(new java.awt.Color(46, 49, 49));
         jLabel_menuItem6.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jLabel_menuItem6.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel_menuItem6.setText("  Calendar");
         jLabel_menuItem6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel_menuItem6.setOpaque(true);
 
         jLabel_menuItem7.setBackground(new java.awt.Color(46, 49, 49));
         jLabel_menuItem7.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jLabel_menuItem7.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel_menuItem7.setText("  Test");
         jLabel_menuItem7.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel_menuItem7.setOpaque(true);
 
