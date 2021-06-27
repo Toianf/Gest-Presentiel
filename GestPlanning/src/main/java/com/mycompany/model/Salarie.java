@@ -94,13 +94,14 @@ public class Salarie extends Sujet implements Observateur {
 
             //Etape 4:Exploiter mon resultat
             while ((resultat.next())) {
-
-                String nom = resultat.getString(1);
+                Integer id = resultat.getInt(1);
+                String nom = resultat.getString("nom");
                 String prenom = resultat.getString("prenom");
                 String email = resultat.getString("email");
                 String profession = resultat.getString("profession");
 
                 Salarie s = new Salarie();
+                s.setId(id);
                 s.setNom(nom);
                 s.setPrenom(prenom);
                 s.setEmail(email);
@@ -118,6 +119,35 @@ public class Salarie extends Sujet implements Observateur {
     }
 
     public Salarie addSalarie(String nom, String prenom, String email, String profession) {
+        Salarie s = new Salarie();
+        s.setNom(nom);
+        s.setPrenom(prenom);
+        s.setEmail(email);
+        s.setProfession(profession);
+        s.ajouterObser(this);
+
+        if (verifyFields(s.getNom(), s.getPrenom(), s.getProfession())) {
+            String registerUserQuery = "INSERT INTO salarie(nom, prenom, email, profession) VALUES (?,?,?,?)";
+
+            try {
+              Connection conn = MysqlConnect.ConnectDB();
+               PreparedStatement pst = conn.prepareStatement(registerUserQuery);
+                pst.setString(1, s.getNom());
+                pst.setString(2, s.getPrenom());
+                pst.setString(3, s.getEmail());
+                pst.setString(4, s.getProfession());
+                pst.executeUpdate();
+                pst.close();
+                notifier();
+            } catch (SQLException ex) {
+                Logger.getLogger(Salarie.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+        return s;
+    }
+    
+        public Salarie updateSalarie(String nom, String prenom, String email, String profession) {
         Salarie s = new Salarie();
         s.setNom(nom);
         s.setPrenom(prenom);
@@ -167,5 +197,6 @@ public class Salarie extends Sujet implements Observateur {
     public void notifier() {
         Dashboard_Form.jList1.setModel(Salarie.ChargerJlist());
     }
+
 
 }

@@ -17,7 +17,6 @@ import javax.swing.JOptionPane;
 
 public class Login_Form extends javax.swing.JFrame {
 
-Connection conn = MysqlConnect.ConnectDB();
 PreparedStatement pst = null;
 ResultSet  rs = null;
 
@@ -451,9 +450,11 @@ ResultSet  rs = null;
         else{
             
             try {
+            Connection conn = MysqlConnect.ConnectDB();    
             pst =conn.prepareStatement(query);
             
             pst.setString(1, u.getLogin());
+            
             pst.setString(2, u.getPassword());
             rs= pst.executeQuery();
             

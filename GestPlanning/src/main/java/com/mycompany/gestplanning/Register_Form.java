@@ -18,7 +18,6 @@ import javax.swing.JOptionPane;
 
 public class Register_Form extends javax.swing.JFrame {
 
-Connection conn = MysqlConnect.ConnectDB();
 PreparedStatement pst = null;
 ResultSet  rs = null;
     
@@ -390,6 +389,7 @@ ResultSet  rs = null;
                  String registerUserQuery = "INSERT INTO utilisateur(nom, prenom, genre, login, password) VALUES (?,?,?,?,?)";
                 
                  try {
+                     Connection conn = MysqlConnect.ConnectDB();
                      pst =conn.prepareStatement(registerUserQuery);
                      pst.setString(1, u.getNom());
                      pst.setString(2, u.getPrenom());
@@ -526,7 +526,7 @@ ResultSet  rs = null;
         String query = "Select * from utilisateur where login=?";
         
         try {
-            
+            Connection conn = MysqlConnect.ConnectDB();
             pst =conn.prepareStatement(query);
             pst.setString(1, username);
             rs = pst.executeQuery();
