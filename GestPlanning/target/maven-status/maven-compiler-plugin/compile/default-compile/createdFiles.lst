@@ -27,4 +27,5 @@ com\mycompany\gestplanning\Dashboard_Form.class
 com\mycompany\gestplanning\Login_Form$6.class
 com\mycompany\gestplanning\Login_Form$3.class
 com\mycompany\model\Sujet.class
+com\mycompany\gestplanning\Dashboard_Form$8.class
 com\mycompany\model\Salarie.class

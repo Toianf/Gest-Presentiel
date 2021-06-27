@@ -2,7 +2,6 @@ package com.mycompany.model;
 
 import com.mycompany.gestplanning.Dashboard_Form;
 import com.mycompany.gestplanning.MysqlConnect;
-import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

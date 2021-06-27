@@ -5,6 +5,7 @@
  */
 package com.mycompany.model;
 
+
 public interface Observateur {
     public void notifier();
 }

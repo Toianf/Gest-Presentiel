@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import javax.swing.JOptionPane;
 
-public class JdbcConnect {
+public class MysqlConnect {
     Connection con = null;
     public static Connection ConnectDB(){
         try {
