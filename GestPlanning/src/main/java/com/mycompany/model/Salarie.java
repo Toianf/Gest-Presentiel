@@ -126,7 +126,7 @@ public class Salarie extends Sujet implements Observateur {
         s.setProfession(profession);
         s.ajouterObser(this);
 
-        if (verifyFields(s.getNom(), s.getPrenom(), s.getProfession())) {
+        if (verifyFields(s.getNom(), s.getPrenom(), s.getProfession()) == true) {
             String registerUserQuery = "INSERT INTO salarie(nom, prenom, email, profession) VALUES (?,?,?,?)";
 
             try {
@@ -137,6 +137,8 @@ public class Salarie extends Sujet implements Observateur {
                 pst.setString(3, s.getEmail());
                 pst.setString(4, s.getProfession());
                 pst.executeUpdate();
+                    JOptionPane.showMessageDialog(null, "Le salarié a bien été créer");
+                    Dashboard_Form.resultatTxt.append(s + " a été créé ! \n");
                 pst.close();
                 notifier();
             } catch (SQLException ex) {
@@ -147,16 +149,17 @@ public class Salarie extends Sujet implements Observateur {
         return s;
     }
     
-        public Salarie updateSalarie(String nom, String prenom, String email, String profession) {
+        public Salarie updateSalarie(Integer id, String nom, String prenom, String email, String profession) {
         Salarie s = new Salarie();
+        s.setId(id);
         s.setNom(nom);
         s.setPrenom(prenom);
         s.setEmail(email);
         s.setProfession(profession);
         s.ajouterObser(this);
 
-        if (verifyFields(s.getNom(), s.getPrenom(), s.getProfession())) {
-            String registerUserQuery = "INSERT INTO salarie(nom, prenom, email, profession) VALUES (?,?,?,?)";
+        if (verifyFields(s.getNom(), s.getPrenom(), s.getProfession()) == true) {
+            String registerUserQuery = "UPDATE salarie SET nom=?, prenom=?, email=?, profession=? WHERE id =?";
 
             try {
               Connection conn = MysqlConnect.ConnectDB();
@@ -165,7 +168,9 @@ public class Salarie extends Sujet implements Observateur {
                 pst.setString(2, s.getPrenom());
                 pst.setString(3, s.getEmail());
                 pst.setString(4, s.getProfession());
+                pst.setInt(5, s.getId());
                 pst.executeUpdate();
+                JOptionPane.showMessageDialog(null, "Les information du salarié ont bien été modifier");
                 pst.close();
                 notifier();
             } catch (SQLException ex) {
@@ -173,6 +178,28 @@ public class Salarie extends Sujet implements Observateur {
             }
 
         }
+        return s;
+    }
+        
+          public Salarie deleteSalarie(Integer id) {
+        Salarie s = new Salarie();
+        s.setId(id);
+
+            String registerUserQuery = "DELETE FROM salarie WHERE id =?";
+
+            try {
+              Connection conn = MysqlConnect.ConnectDB();
+               PreparedStatement pst = conn.prepareStatement(registerUserQuery);
+                pst.setInt(1, s.getId());
+                pst.executeUpdate();
+                JOptionPane.showMessageDialog(null, "Le salarié a bien été supprimé");
+                pst.close();
+                notifier();
+            } catch (SQLException ex) {
+                Logger.getLogger(Salarie.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        
         return s;
     }
     
